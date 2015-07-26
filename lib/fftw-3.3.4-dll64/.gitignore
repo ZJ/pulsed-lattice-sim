@@ -1,0 +1,4 @@
+# Keep only the .h
+*
+!fftw3.h
+
