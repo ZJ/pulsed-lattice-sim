@@ -23,6 +23,12 @@ Could be any of:
 Each have 1" OD with short side at 3.00 +- 0.15mm
 Angular tolerance at 30 arcsec
 
+The wedge is going to add some linearly increasing phase along the face of the wedge.
+The slope of the phase corresponds to a angular deflection of the beams (that's actually the point of the wedge stock).
+We try to snag them normal to the propagation, and then hopefully there is still some phase shift left over to scramble relative image fringes.
+
+Need to check:  catching them normal may undo ALL of the phase changes, leaving us with our original problems.  Whoops.
+
 ## Flipping Beams
 We generally think of things being oriented in the horizontal plane, because that's how we work.
 To generate our final lattice, we'll copy and mirror a set of beams.
