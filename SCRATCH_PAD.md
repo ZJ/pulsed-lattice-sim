@@ -42,3 +42,19 @@ For row-major order, that involves copying entire rows at a time, so we'd want t
 That is, we'd want to take an NxN (row)x(column) array, duplicate it to the top N lines of an Nx(2N) array.
 Then take the first line, and copy it to the last (2N)th line.
 The second to the (2N-1)th, and so on until the (N)th into the (N+1)th line.
+
+## Dimensions/Scaling
+Alright, let's talk dimensions.
+I like to center the input an NxN box, then add N/2 thick border all the way around.
+In other words, I like the transformed size to be roughly twice the actual input beam size.
+Trying to minimize finite size effects, basically.
+
+At the final focus we're hoping for 100nm resolution.
+For the DFT, we'd get answer in reciprocal space, with each pixel spread by 1/dx of the original coordinates.
+The optical thing is done in real space though, with a mapping real space coordinates (s) to reciprocal space transform coordinates (u) by u = s/(lambda*f).
+So, we get 1/dx=ds/(lambda*f) -> ds = lambda*f/dx.
+For two consecutive lenses, ds2 = lambda*f2/(lambda*f1/dx1) = f2/f1 * dx1, which is a simple magnification and is unsurprising in hindsight.
+
+So, 100nm spacing at the final focus is equivalent to 20mm/200mm=1/10 the original, or rather 100nm at focus requires 1um at the input.
+Input beam is ~1mm, so this begs 1000 actual input points, or more convenient for computation, 1024.
+
