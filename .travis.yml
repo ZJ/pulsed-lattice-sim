@@ -1,3 +1,7 @@
 language: c
 compiler: gcc
-
+sudo: false
+addons:
+  apt:
+    packages:
+	- libfftw3-dev
