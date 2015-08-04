@@ -7,4 +7,5 @@ addons:
     - libfftw3-dev
 
 before_script:
+  - pwd
   - chmod +x configure
