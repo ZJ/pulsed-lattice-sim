@@ -8,4 +8,5 @@ addons:
 
 before_script:
   - pwd
-  - chmod +x configure
+  - ls -l
+  - chmod +x ./configure
