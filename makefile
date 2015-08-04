@@ -1,5 +1,5 @@
 all:
-	true
+	echo "all"
 
 test:
-	true
+	echo "test"

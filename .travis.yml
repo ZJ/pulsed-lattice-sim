@@ -10,3 +10,4 @@ before_script:
   - pwd
   - ls -l
   - chmod +x ./configure
+  - ls -l

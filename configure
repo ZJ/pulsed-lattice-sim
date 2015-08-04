@@ -1,3 +1,5 @@
 #!/usr/bin/env sh
 
-true
+set -x
+
+echo "In configure script"
