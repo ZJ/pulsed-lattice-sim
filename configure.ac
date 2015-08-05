@@ -1,7 +1,7 @@
 #                                               -*- Autoconf -*-
 # Process this file with autoconf to produce a configure script.
 
-AC_PREREQ([2.69])
+AC_PREREQ([2.68])
 AC_INIT([pulsed-lattice-sim], [1.0], [http://github.com/ZJ/pulsed-lattice-sim/issues], [pulsed-lattice-sim])
 AM_INIT_AUTOMAKE([-Wall -Werror foreign])
 AC_CONFIG_SRCDIR([src/main.c])
