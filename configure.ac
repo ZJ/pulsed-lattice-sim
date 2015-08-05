@@ -10,13 +10,18 @@ AC_CONFIG_HEADERS([config.h])
 # Checks for programs.
 AC_PROG_CC
 
+# Check fo Check for Unit Testing
+PKG_CHECK_MODULES([CHECK], [check >= 0.9.0])
+#AM_PATH_CHECK(,[have_check="yes"],AC_MSG_WARN([Check not found; cannot run unit tests!])[have_check="no"])
+#AM_CONDITIONAL(HAVE_CHECK, test x"$have_check" = "xyes")
+
 # Checks for libraries.
 AC_CHECK_LIB([m], [exp])
 AC_CHECK_LIB([fftw3], [fftw_execute])
 
 # Checks for header files.
-AC_CHECK_HEADER([math.h])
-AC_CHECK_HEADER([fftw3.h])
+AC_CHECK_HEADERS([stdlib.h math.h fftw3.h])
+# AC_CHECK_HEADER([fftw3.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 
@@ -25,5 +30,6 @@ AC_CHECK_HEADER([fftw3.h])
 AC_CONFIG_FILES([
  Makefile
  src/Makefile
+ tests/Makefile
 ])
 AC_OUTPUT
