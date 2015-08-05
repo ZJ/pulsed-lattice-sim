@@ -1,3 +1,9 @@
+## .gitignore for:
+# C-Language
+# Autotools
+# gcov
+
+## Github.com C Language Template .gitignore
 # Object files
 *.o
 *.ko
@@ -30,3 +36,26 @@
 
 # Debug files
 *.dSYM/
+
+## Github.com Autotools Template .gitignore
+# http://www.gnu.org/software/automake
+
+Makefile.in
+
+# http://www.gnu.org/software/autoconf
+
+/autom4te.cache
+/aclocal.m4
+/compile
+/configure
+/depcomp
+/install-sh
+/missing
+/stamp-h1
+
+## Github.com Gcov Template .gitignore
+# gcc coverage testing tool files
+
+*.gcno
+*.gcda
+*.gcov
