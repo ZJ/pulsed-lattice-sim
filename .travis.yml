@@ -5,7 +5,11 @@ addons:
   apt:
     packages:
     - libfftw3-dev
-    # - check
+    - check
+
+branches:
+  only:
+    - master
 
 before_script:
   - autoreconf --install
