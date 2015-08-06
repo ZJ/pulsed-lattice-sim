@@ -11,9 +11,8 @@ AC_CONFIG_HEADERS([config.h])
 AC_PROG_CC
 
 # Check fo Check for Unit Testing
-PKG_CHECK_MODULES([CHECK], [check >= 0.9.0])
-#AM_PATH_CHECK(,[have_check="yes"],AC_MSG_WARN([Check not found; cannot run unit tests!])[have_check="no"])
-#AM_CONDITIONAL(HAVE_CHECK, test x"$have_check" = "xyes")
+PKG_CHECK_MODULES([CHECK], [check >= 0.9.0],[have_check="yes"],AC_MSG_WARN([Check not found; cannot run unit tests!])[have_check="no"])
+AM_CONDITIONAL(HAVE_CHECK, test x"$have_check" = "xyes")
 
 # Checks for libraries.
 AC_CHECK_LIB([m], [exp])
