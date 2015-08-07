@@ -111,7 +111,7 @@ START_TEST(flip_region) {
     }
 
 // Check we DO take care of regions we should
-    startCheck = destrowst + srcrowlen;
+    startCheck = destrowst + srcrowlen - 1;
     for (i = 0; i < srcrowlen; i++) {
 	int                           srclinest = (srcrowstart + i) * colsize + srccolstart;
 	int                           destlinest = (startCheck - i) * colsize + destcolst;
