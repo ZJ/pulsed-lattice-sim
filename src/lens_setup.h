@@ -3,7 +3,7 @@
 
 #include <complex.h>		       // Make sure complex types are setup for fftw load
 #include <fftw3.h>		       // Get fftw types if needed
-
+#include <string.h>		       // Get access to memcpy()
 #include "retCodes.h"		       // Our internally defined return codes
 
 retCodes_type                 vert_flip_region(
