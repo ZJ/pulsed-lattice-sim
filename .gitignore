@@ -1,4 +1,8 @@
-## .gitignore for:
+## Manual includes
+build-aux/
+config.h.in
+
+## Template of .gitignore for:
 # C-Language
 # Autotools
 # gcov
