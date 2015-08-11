@@ -48,7 +48,188 @@ void init_cleared(
     }
 }
 
-START_TEST(flip_region) {
+void setup_blanks(
+) {
+    toFlip = fftw_alloc_complex(20 * 20);
+    flipped = fftw_alloc_complex(20 * 20);
+    init_cleared(toFlip, 20, 20);
+    init_cleared(flipped, 20, 20);
+}
+
+#define NUM_FLIP_BOUNDS 16
+START_TEST(flip_bounds) {
+    const char                   *testDetails[NUM_FLIP_BOUNDS] = {
+	"Region starts past last source column.",
+	"Region ends past last source column.",
+	"Region starts past last source row.",
+	"Region end past last source row.",
+	"Negative start source column.",
+	"Negative start source row.",
+	"Region starts past last destination column.",
+	"Region ends past last destination column.",
+	"Region starts past last destination row.",
+	"Region end past last destination row.",
+	"Negative start destination column.",
+	"Negative start destination row.",
+	"Source-Destination top-bottom intersection.",
+	"Source-Destination left-right intersection.",
+	"Source-Destination bottom-top intersection.",
+	"Source-Destination right-left intersection."
+    };
+    fftw_complex                 *srcPtr = toFlip,
+	*destPtr = flipped;
+    int                           srcCol = 0,
+	srcRow = 0,
+	srcColLen = 10,
+	srcRowLen = 10,
+	destRow = 0,
+	destCol = 0;
+    const int                     dimLen = 20;
+    int                           runNum = _i % NUM_FLIP_BOUNDS;
+
+    switch (runNum) {
+    case 0:
+	srcCol = dimLen;
+	break;
+    case 1:
+	srcCol = dimLen - srcColLen;
+	break;
+    case 2:
+	srcRow = dimLen;
+	break;
+    case 3:
+	srcRow = dimLen - srcRowLen;
+	break;
+    case 4:
+	srcCol = -1;
+	break;
+    case 5:
+	srcRow = -1;
+	break;
+    case 6:
+	destCol = dimLen;
+	break;
+    case 7:
+	destCol = dimLen - srcColLen;
+	break;
+    case 8:
+	destRow = dimLen;
+	break;
+    case 9:
+	destRow = dimLen - srcRowLen;
+	break;
+    case 10:
+	destCol = -1;
+	break;
+    case 11:
+	destRow = -1;
+	break;
+    case 12:
+	destPtr = srcPtr;
+	srcRow = srcRowLen - 1;
+	break;
+    case 13:
+	destPtr = srcPtr;
+	destCol = srcColLen - 1;
+	break;
+    case 14:
+	destPtr = srcPtr;
+	destRow = srcRowLen - 1;
+	break;
+    case 15:
+	destPtr = srcPtr;
+	srcCol = srcColLen - 1;
+	break;
+    default:
+	ck_abort_msg("Got to invalid test case in flip_(bounds) (runNum = %d)", runNum);
+    }
+
+    ck_assert_msg(ERROR ==
+		  vert_flip_region(srcPtr, dimLen, dimLen, srcCol, srcRow, srcColLen, srcColLen,
+				   destPtr, dimLen, dimLen, destCol, destRow),
+		  "vert_flip_region() failed to flag bounds violation %s.", testDetails[runNum]);
+}
+
+END_TEST
+#define NUM_FLIP_BOUNDS_SNUGGLES 5
+START_TEST(
+    flip_bounds_snuggle
+) {
+    const char                   *testDetails[NUM_FLIP_BOUNDS_SNUGGLES] = {
+	"Source above    destination",
+	"Source left of  destination",
+	"Source below    destination",
+	"Source right of destination",
+	"Source in same configuration but different array from destination"
+    };
+    fftw_complex                 *destPtr = toFlip;
+    int                           runNum = _i % NUM_FLIP_BOUNDS_SNUGGLES;
+    int                           srcCol = 0,
+	srcRow = 0,
+	destCol = 0,
+	destRow = 0;
+
+    switch (runNum) {
+    case 0:
+	destRow = 10;
+	break;
+    case 1:
+	destCol = 10;
+	break;
+    case 2:
+	srcRow = 10;
+	break;
+    case 3:
+	srcCol = 10;
+	break;
+    case 4:
+	destPtr = flipped;
+	break;
+    default:
+	ck_abort_msg("Invalid test reached in flip_bounds_snuggle() [runNum = %d]", runNum);
+    }
+
+
+    ck_assert_msg(OK ==
+		  vert_flip_region(toFlip, 20, 20, srcCol, srcRow, 10, 10, destPtr, 20, 20,
+				   destCol, destRow),
+		  "vert_flip_region() erroneously failed with %s when snuggled.",
+		  testDetails[runNum]);
+
+}
+
+END_TEST
+#define NUM_FLIP_NULL_PTR 2
+START_TEST(
+    flip_null_ptr
+) {
+    const char                   *testDetails[NUM_FLIP_NULL_PTR] =
+	{ "Source NULL ptr.", "Destination NULL ptr." };
+
+    fftw_complex                 *srcPtr = toFlip,
+	*destPtr = flipped;
+    int                           runNum = _i % NUM_FLIP_NULL_PTR;
+
+    switch (runNum) {
+    case 0:
+	srcPtr = NULL;
+	break;
+    case 1:
+	destPtr = NULL;
+	break;
+    default:
+	ck_abort_msg("Reached undefined test case (%d).", runNum);
+    }
+
+
+    ck_assert_msg(ERROR ==
+		  vert_flip_region(srcPtr, 20, 20, 1, 1, 5, 5, destPtr, 20, 20, 10, 10),
+		  "vert_flip_region() did not fail with %s", testDetails[runNum]);
+}
+
+END_TEST START_TEST(
+    flip_region
+) {
     int                           i,
                                   j;
     int                           colsize = 20;
@@ -69,9 +250,9 @@ START_TEST(flip_region) {
     init_cleared(flipped, colsize, rowsize);
 
     ck_assert_msg(OK ==
-		  vert_flip_region(toFlip, colsize, rowsize, srccolstart, srcrowstart, srccollen,
-				   srcrowlen, flipped, colsize, rowsize, destcolst, destrowst),
-		  "vert_flip_region() unexpectly failed");
+		  vert_flip_region(toFlip, colsize, rowsize, srccolstart, srcrowstart,
+				   srccollen, srcrowlen, flipped, colsize, rowsize, destcolst,
+				   destrowst), "vert_flip_region() unexpectly failed");
 
 // Checking we don't touch regions we shouldn't
     // Bottom area
@@ -120,7 +301,8 @@ START_TEST(flip_region) {
 	    ck_assert_msg(toFlip[srclinest + j] == flipped[destlinest + j],
 			  "Did not flip properly. Expected %d + i%d, found %d + i%d",
 			  (int) creal(toFlip[srclinest + j]),
-			  (int) cimag(toFlip[srclinest + j]), (int) creal(flipped[destlinest + j]),
+			  (int) cimag(toFlip[srclinest + j]),
+			  (int) creal(flipped[destlinest + j]),
 			  (int) cimag(flipped[destlinest + j]));
 	}
     }
@@ -225,11 +407,18 @@ END_TEST Suite               *flip_suite(
 
     s = suite_create("Flip Arrays");
 
-    tc_core = tcase_create("test_flip");
+    tc_core = tcase_create("flip_verify_function");
     tcase_add_checked_fixture(tc_core, checkClearArray, checkClearArray);
     tcase_add_test(tc_core, flip_region);
     tcase_add_loop_test(tc_core, flip_top, 10, 14);
     tcase_add_loop_test(tc_core, flip_bot, 10, 14);
+    suite_add_tcase(s, tc_core);
+
+    tc_core = tcase_create("flip_verify_bounds");
+    tcase_add_unchecked_fixture(tc_core, setup_blanks, checkClearArray);
+    tcase_add_loop_test(tc_core, flip_null_ptr, 0, NUM_FLIP_NULL_PTR);
+    tcase_add_loop_test(tc_core, flip_bounds_snuggle, 0, NUM_FLIP_BOUNDS_SNUGGLES);
+    tcase_add_loop_test(tc_core, flip_bounds, 0, NUM_FLIP_BOUNDS);
     suite_add_tcase(s, tc_core);
 
     return s;
