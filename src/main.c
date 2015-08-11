@@ -29,13 +29,13 @@ memRetCodes_type initGaussianEnvelope(
     const double colWaist,
     const double amplitude
 ) {
-    int                           i = 0;
-    int                           j = 0;
-    double                        iCenter;
-    double                        jCenter;
-    const double                  rowDenom = 2 * rowWaist * rowWaist;
-    const double                  colDenom = 2 * colWaist * colWaist;
-    unsigned int                  numCells = numRows * numCols;
+    int                 i = 0;
+    int                 j = 0;
+    double              iCenter;
+    double              jCenter;
+    const double        rowDenom = 2 * rowWaist * rowWaist;
+    const double        colDenom = 2 * colWaist * colWaist;
+    unsigned int        numCells = numRows * numCols;
 
     // Check for improperly formatted size info
     if (0 == numRows) {
@@ -43,7 +43,7 @@ memRetCodes_type initGaussianEnvelope(
     }
     // Handle NULL ptr
     if (NULL == *inputArray) {
-	fftw_complex                 *tempPtr = NULL;
+	fftw_complex       *tempPtr = NULL;
 
 	tempPtr = fftw_alloc_complex(numCells);
 	if (NULL == tempPtr) {
@@ -55,9 +55,8 @@ memRetCodes_type initGaussianEnvelope(
     iCenter = ((double) numCols) / 2.0;
     jCenter = ((double) numRows) / 2.0;
     for (i = 0; i < numRows; i++) {
-	double                        rowAmp =
-	    amplitude * exp(-((i - iCenter) * (i - iCenter)) / rowDenom);
-	int                           iOffset = i * numCols;
+	double              rowAmp = amplitude * exp(-((i - iCenter) * (i - iCenter)) / rowDenom);
+	int                 iOffset = i * numCols;
 
 	for (j = 0; j < numCols; j++) {
 	    *(*inputArray + iOffset + j) =
@@ -72,8 +71,8 @@ int main(
     int argc,
     char **argv
 ) {
-    fftw_complex                 *testPtr = NULL;
-    int                           i = 0;
+    fftw_complex       *testPtr = NULL;
+    int                 i = 0;
 
     i++;
     testPtr = fftw_alloc_complex(N * N);

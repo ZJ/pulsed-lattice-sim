@@ -5,10 +5,10 @@
 //-cli -cbi // Does the case statement indentation, ignoring
 -ss // Emphasize single-statement loops
 -bs // Force break before sizeof
--di30 // Start identifiers in the 30th column
+-di20 // Start identifiers in the 30th column
 -bc // Each identifier goes on its own line
 -bfda -bfde // Function arguments on their own lines
 -brf // Brace for function declaration
--c40 // Comments start in line 40
+-c30 // Comments start in line 40
 -l100 // Lines are 100 chars long
 

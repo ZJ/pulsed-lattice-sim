@@ -1,10 +1,10 @@
 #include "lens_setup.h"
 
-#include "retCodes.h"		       // Our internally defined return codes
+#include "retCodes.h"	     // Our internally defined return codes
 
-#include <complex.h>		       // Make sure complex types are setup for fftw load
-#include <fftw3.h>		       // Get fftw types if needed
-#include <string.h>		       // Get memcpy()
+#include <complex.h>	     // Make sure complex types are setup for fftw load
+#include <fftw3.h>	     // Get fftw types if needed
+#include <string.h>	     // Get memcpy()
 
 retCodes_type vert_flip_region(
     fftw_complex * src,
@@ -20,10 +20,10 @@ retCodes_type vert_flip_region(
     int destStartCol,
     int destStartRow
 ) {
-    fftw_complex                 *srcLine = src + (srcStartRow * srcSizeCol) + srcStartCol,
-	*destLine = dest + (destStartRow * destSizeCol) + destStartCol;
-    size_t                        lineLen = sizeof (fftw_complex) * srcLenCol;
-    int                           copyRow;
+    fftw_complex       *srcLine = src + (srcStartRow * srcSizeCol) + srcStartCol;
+    fftw_complex       *destLine = dest + (destStartRow * destSizeCol) + destStartCol;
+    size_t              lineLen = sizeof (fftw_complex) * srcLenCol;
+    int                 copyRow;
 
 // No null ptrs allowed
     if (NULL == src || NULL == dest)
@@ -41,7 +41,7 @@ retCodes_type vert_flip_region(
 
 //Check for overlap iff we're in the same array
     if (src == dest) {
-	unsigned int                  flags = 0;
+	unsigned int        flags = 0;
 
 	// src starts to the right of dest
 	flags |= srcStartCol >= (destStartCol + srcLenCol) ? 1 << 0 : 0;

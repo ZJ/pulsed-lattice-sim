@@ -4,10 +4,10 @@
 
 #include "../src/lens_setup.h"
 
-const fftw_complex            clearedVal = -1.0 + I * 0.0;
+const fftw_complex  clearedVal = -1.0 + I * 0.0;
 
-fftw_complex                 *toFlip;
-fftw_complex                 *flipped;
+fftw_complex       *toFlip;
+fftw_complex       *flipped;
 
 void checkClearArray(
 ) {
@@ -24,8 +24,8 @@ void init_indexes(
     int nCols,
     int nRows
 ) {
-    int                           i,
-                                  j;
+    int                 i,
+                        j;
 
     for (i = 0; i < nRows; i++) {
 	for (j = 0; j < nCols; j++) {
@@ -39,9 +39,9 @@ void init_cleared(
     int nCols,
     int nRows
 ) {
-    int                           i,
-                                  j;
-    int                           total = nCols * nRows;
+    int                 i,
+                        j;
+    int                 total = nCols * nRows;
 
     for (i = 0; i < total; i++) {
 	toInit[i] = clearedVal;
@@ -58,7 +58,7 @@ void setup_blanks(
 
 #define NUM_FLIP_BOUNDS 16
 START_TEST(flip_bounds) {
-    const char                   *testDetails[NUM_FLIP_BOUNDS] = {
+    const char         *testDetails[NUM_FLIP_BOUNDS] = {
 	"Region starts past last source column.",
 	"Region ends past last source column.",
 	"Region starts past last source row.",
@@ -76,16 +76,16 @@ START_TEST(flip_bounds) {
 	"Source-Destination bottom-top intersection.",
 	"Source-Destination right-left intersection."
     };
-    fftw_complex                 *srcPtr = toFlip,
-	*destPtr = flipped;
-    int                           srcCol = 0,
-	srcRow = 0,
-	srcColLen = 10,
-	srcRowLen = 10,
-	destRow = 0,
-	destCol = 0;
-    const int                     dimLen = 20;
-    int                           runNum = _i % NUM_FLIP_BOUNDS;
+    fftw_complex       *srcPtr = toFlip;
+    fftw_complex       *destPtr = flipped;
+    int                 srcCol = 0;
+    int                 srcRow = 0;
+    int                 srcColLen = 10;
+    int                 srcRowLen = 10;
+    int                 destRow = 0;
+    int                 destCol = 0;
+    const int           dimLen = 20;
+    int                 runNum = _i % NUM_FLIP_BOUNDS;
 
     switch (runNum) {
     case 0:
@@ -155,19 +155,19 @@ END_TEST
 START_TEST(
     flip_bounds_snuggle
 ) {
-    const char                   *testDetails[NUM_FLIP_BOUNDS_SNUGGLES] = {
+    const char         *testDetails[NUM_FLIP_BOUNDS_SNUGGLES] = {
 	"Source above    destination",
 	"Source left of  destination",
 	"Source below    destination",
 	"Source right of destination",
 	"Source in same configuration but different array from destination"
     };
-    fftw_complex                 *destPtr = toFlip;
-    int                           runNum = _i % NUM_FLIP_BOUNDS_SNUGGLES;
-    int                           srcCol = 0,
-	srcRow = 0,
-	destCol = 0,
-	destRow = 0;
+    fftw_complex       *destPtr = toFlip;
+    int                 runNum = _i % NUM_FLIP_BOUNDS_SNUGGLES;
+    int                 srcCol = 0;
+    int                 srcRow = 0;
+    int                 destCol = 0;
+    int                 destRow = 0;
 
     switch (runNum) {
     case 0:
@@ -203,12 +203,12 @@ END_TEST
 START_TEST(
     flip_null_ptr
 ) {
-    const char                   *testDetails[NUM_FLIP_NULL_PTR] =
+    const char         *testDetails[NUM_FLIP_NULL_PTR] =
 	{ "Source NULL ptr.", "Destination NULL ptr." };
 
-    fftw_complex                 *srcPtr = toFlip,
-	*destPtr = flipped;
-    int                           runNum = _i % NUM_FLIP_NULL_PTR;
+    fftw_complex       *srcPtr = toFlip;
+    fftw_complex       *destPtr = flipped;
+    int                 runNum = _i % NUM_FLIP_NULL_PTR;
 
     switch (runNum) {
     case 0:
@@ -230,18 +230,18 @@ START_TEST(
 END_TEST START_TEST(
     flip_region
 ) {
-    int                           i,
-                                  j;
-    int                           colsize = 20;
-    int                           rowsize = 20;
-    int                           srccolstart = 2;
-    int                           srccollen = 10;
-    int                           srcrowstart = 3;
-    int                           srcrowlen = 7;
-    int                           destcolst = 5;
-    int                           destrowst = 12;
-    int                           startCheck,
-                                  stopCheck;
+    int                 i,
+                        j;
+    int                 colsize = 20;
+    int                 rowsize = 20;
+    int                 srccolstart = 2;
+    int                 srccollen = 10;
+    int                 srcrowstart = 3;
+    int                 srcrowlen = 7;
+    int                 destcolst = 5;
+    int                 destrowst = 12;
+    int                 startCheck,
+                        stopCheck;
 
     toFlip = fftw_alloc_complex(colsize * rowsize);
     flipped = fftw_alloc_complex(colsize * rowsize);
@@ -275,7 +275,7 @@ END_TEST START_TEST(
     startCheck = destrowst * colsize;
     stopCheck = (destrowst + srcrowlen) * colsize;
     for (i = startCheck; i < stopCheck; i += colsize) {
-	int                           rightedge = destcolst + srccollen;
+	int                 rightedge = destcolst + srccollen;
 
 	// Left edge
 	for (j = 0; j < destcolst; j++) {
@@ -294,8 +294,8 @@ END_TEST START_TEST(
 // Check we DO take care of regions we should
     startCheck = destrowst + srcrowlen - 1;
     for (i = 0; i < srcrowlen; i++) {
-	int                           srclinest = (srcrowstart + i) * colsize + srccolstart;
-	int                           destlinest = (startCheck - i) * colsize + destcolst;
+	int                 srclinest = (srcrowstart + i) * colsize + srccolstart;
+	int                 destlinest = (startCheck - i) * colsize + destcolst;
 
 	for (j = 0; j < srccollen; j++) {
 	    ck_assert_msg(toFlip[srclinest + j] == flipped[destlinest + j],
@@ -311,12 +311,12 @@ END_TEST START_TEST(
 END_TEST START_TEST(
     flip_top
 ) {
-    fftw_complex                 *preflip;
-    int                           i,
-                                  j;
-    const int                     halfPoint = _i / 2;
-    const int                     fullPoint = _i - 1;
-    const int                     count = _i;
+    fftw_complex       *preflip;
+    int                 i,
+                        j;
+    const int           halfPoint = _i / 2;
+    const int           fullPoint = _i - 1;
+    const int           count = _i;
 
     preflip = fftw_alloc_complex(count * count);
     toFlip = preflip;
@@ -361,12 +361,12 @@ END_TEST START_TEST(
 END_TEST START_TEST(
     flip_bot
 ) {
-    fftw_complex                 *preflip;
-    int                           i,
-                                  j;
-    const int                     halfPoint = _i / 2;
-    const int                     fullPoint = _i - 1;
-    const int                     count = _i;
+    fftw_complex       *preflip;
+    int                 i,
+                        j;
+    const int           halfPoint = _i / 2;
+    const int           fullPoint = _i - 1;
+    const int           count = _i;
 
     preflip = fftw_alloc_complex(count * count);
     toFlip = preflip;
@@ -399,11 +399,11 @@ END_TEST START_TEST(
 
 }
 
-END_TEST Suite               *flip_suite(
+END_TEST Suite     *flip_suite(
     void
 ) {
-    Suite                        *s;
-    TCase                        *tc_core;
+    Suite              *s;
+    TCase              *tc_core;
 
     s = suite_create("Flip Arrays");
 
@@ -427,9 +427,9 @@ END_TEST Suite               *flip_suite(
 int main(
     void
 ) {
-    int                           number_failed;
-    Suite                        *s;
-    SRunner                      *sr;
+    int                 number_failed;
+    Suite              *s;
+    SRunner            *sr;
 
     s = flip_suite();
     sr = srunner_create(s);
