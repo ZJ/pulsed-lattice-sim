@@ -2,15 +2,9 @@
 #include <stdio.h>
 #include <fftw3.h>
 
+#include "retCodes.h"
+
 #define N 4096
-
-typedef enum memRetCodes {
-    OK,				       //!< No Error
-    ERR_MEM_ALLOC,		       //!< Problem reported by allocation routines
-    ERR_MEM_NOSIZE,		       //!< Needed size field missing/zero
-    ERR_MEM_NULLPTR		       //!< Required pointer had a NULL value
-} memRetCodes_type;
-
 
 /*!	@brief Generates a real-valued Gaussian envelope
  *
@@ -58,8 +52,8 @@ memRetCodes_type initGaussianEnvelope(
 	*inputArray = tempPtr;
     }
     // Do the Gaussian
-    iCenter = ((double) numCols) /2.0;
-    jCenter = ((double) numRows) /2.0;
+    iCenter = ((double) numCols) / 2.0;
+    jCenter = ((double) numRows) / 2.0;
     for (i = 0; i < numRows; i++) {
 	double                        rowAmp =
 	    amplitude * exp(-((i - iCenter) * (i - iCenter)) / rowDenom);
@@ -71,7 +65,7 @@ memRetCodes_type initGaussianEnvelope(
 	}
     }
 
-    return OK;
+    return OK_MEM;
 }
 
 int main(
