@@ -25,6 +25,38 @@ retCodes_type vert_flip_region(
     size_t                        lineLen = sizeof (fftw_complex) * srcLenCol;
     int                           copyRow;
 
+// No null ptrs allowed
+    if (NULL == src || NULL == dest)
+	return ERROR;
+
+// Make sure we weren't asked to go outside our edges
+    if (srcStartCol < 0 || (srcStartCol + srcLenCol) > srcSizeCol)
+	return ERROR;
+    if (destStartCol < 0 || (destStartCol + srcLenCol) > destSizeCol)
+	return ERROR;
+    if (srcStartRow < 0 || (srcStartRow + srcLenRow) > srcSizeRow)
+	return ERROR;
+    if (destStartRow < 0 || (destStartRow + srcLenRow) > destSizeRow)
+	return ERROR;
+
+//Check for overlap iff we're in the same array
+    if (src == dest) {
+	unsigned int                  flags = 0;
+
+	// src starts to the right of dest
+	flags |= srcStartCol >= (destStartCol + srcLenCol) ? 1 << 0 : 0;
+	// dest starts to the right of src
+	flags |= destStartCol >= (srcStartCol + srcLenCol) ? 1 << 1 : 0;
+	// src starts below dest        
+	flags |= srcStartRow >= (destStartRow + srcLenRow) ? 1 << 2 : 0;
+	// dest starts below src        
+	flags |= destStartRow >= (srcStartRow + srcLenRow) ? 1 << 3 : 0;
+
+	// if any of the above are true, we don't intersect.  If all are false, we must.
+	if (0 == flags)
+	    return ERROR;
+    }
+// Do the flip
     for (copyRow = 0; copyRow < srcLenRow; copyRow++) {
 	memcpy(destLine + ((srcLenRow - 1 - copyRow) * destSizeCol),
 	       srcLine + (copyRow * srcSizeCol), lineLen);
