@@ -92,13 +92,13 @@ START_TEST(flip_bounds) {
 	srcCol = dimLen;
 	break;
     case 1:
-	srcCol = dimLen - srcColLen;
+	srcCol = dimLen - srcColLen + 1;
 	break;
     case 2:
 	srcRow = dimLen;
 	break;
     case 3:
-	srcRow = dimLen - srcRowLen;
+	srcRow = dimLen - srcRowLen + 1;
 	break;
     case 4:
 	srcCol = -1;
@@ -110,13 +110,13 @@ START_TEST(flip_bounds) {
 	destCol = dimLen;
 	break;
     case 7:
-	destCol = dimLen - srcColLen;
+	destCol = dimLen - srcColLen + 1;
 	break;
     case 8:
 	destRow = dimLen;
 	break;
     case 9:
-	destRow = dimLen - srcRowLen;
+	destRow = dimLen - srcRowLen + 1;
 	break;
     case 10:
 	destCol = -1;
