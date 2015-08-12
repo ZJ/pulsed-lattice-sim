@@ -18,4 +18,5 @@ script:
   - ./configure && make && make check
 
 after-failure:
+  - echo -e "(╯°□°)╯︵ ┻━┻"
   - cat tests/test-suite.log
