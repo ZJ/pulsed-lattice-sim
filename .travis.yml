@@ -17,6 +17,9 @@ before_script:
 script:
   - ./configure && make && make check
 
+after-success:
+  - echo -e "(╯°□°)╯︵ ┻━┻"
+
 after-failure:
   - echo -e "(╯°□°)╯︵ ┻━┻"
   - cat tests/test-suite.log
