@@ -18,8 +18,16 @@ script:
   - ./configure && make && make check
 
 after_success:
-  - echo -e "(╯°□°)╯︵ ┻━┻"
+  - echo -e "\e[32m( \u00b4 \u25bd ` )b\e[0m"
 
 after_failure:
-  - echo -e "(╯°□°)╯︵ ┻━┻"
+  - echo -e "\e[31m(╯°□°)╯︵ ┻━┻\e[0m"
   - cat tests/test-suite.log
+
+after_script:
+  - ls -al tests/
+  - echo "\e[33m================================\e[0m"
+  - cat tests/*.trs
+  - echo "\e[33m================================\e[0m"
+  - cat tests/*.log
+  - echo "\e[33m================================\e[0m"
