@@ -25,4 +25,5 @@ after_failure:
   - cat tests/test-suite.log
 
 after_script:
-  - ls -AlR .
+  - ls -AlR tests/
+  - cat tests/Makefile
