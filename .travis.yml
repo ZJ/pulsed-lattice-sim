@@ -13,13 +13,13 @@ branches:
 
 before_script:
   - autoreconf --install
+  - ./configure
 
 script:
-  - ./configure && make && make check
+  - make && make check
 
-after_success:
-  - echo -e "(╯°□°)╯︵ ┻━┻"
-
-after_failure:
-  - echo -e "(╯°□°)╯︵ ┻━┻"
-  - cat tests/test-suite.log
+# after_success:
+#  - echo -e "\e[32m( \u00b4 \u25bd \` )b\e[0m"
+#
+#after_failure:
+#  - echo -e "\e[31m(╯°□°)╯︵ ┻━┻\e[0m"
