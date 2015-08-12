@@ -25,7 +25,7 @@ after_failure:
   - cat tests/test-suite.log
 
 after_script:
-  - ls -al tests/
+  - ls -alr .
   - echo "\e[33m================================\e[0m"
   - cat tests/*.trs
   - echo "\e[33m================================\e[0m"
