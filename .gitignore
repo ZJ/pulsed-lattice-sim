@@ -1,6 +1,14 @@
 ## Manual includes
 build-aux/
-config.h.in
+config.*
+*/.libs
+*/.deps
+tests/*.log
+tests/*.trs
+tests/*.test
+*/Makefile
+Makefile
+libtool
 
 ## Template of .gitignore for:
 # C-Language
