@@ -1,6 +1,7 @@
 #include <complex.h>
 #include <stdio.h>
 #include <fftw3.h>
+#include <math.h>
 
 #include "retCodes.h"
 
@@ -60,7 +61,7 @@ memRetCodes_type initGaussianEnvelope(
 
 	for (j = 0; j < numCols; j++) {
 	    *(*inputArray + iOffset + j) =
-		rowAmp * exp(-((j - jCenter) * (j - jCenter)) / colDenom);
+		rowAmp * exp(-((j - jCenter) * (j - jCenter)) / colDenom) + 0.0 * I;
 	}
     }
 
