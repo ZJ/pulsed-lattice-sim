@@ -2,8 +2,8 @@ language: c
 compiler: gcc
 env:
   - HOST=
-  - HOST=i686-w64-mingw32 LDFLAGS='-static-libgcc -static-libstdc++'
-  - HOST=x86_64-w64-mingw32 LDFLAGS='-static-libgcc -static-libstdc++'
+  - HOST=i686-w64-mingw32 CFLAGS='-I=winlibs/${HOST}/' LDFLAGS='-L=winlibs/${HOST}/ -static-libgcc -static-libstdc++'
+  - HOST=x86_64-w64-mingw32 CFLAGS='-I=winlibs/${HOST}/' LDFLAGS='-L=winlibs/${HOST}/ -static-libgcc -static-libstdc++'
 sudo: false
 addons:
   apt:
