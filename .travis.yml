@@ -20,7 +20,7 @@ branches:
 
 before_script:
   - autoreconf --install
-  - if [ ! -z "$HOST" ]; then CC="${HOST}-gcc" CFLAGS="-I$(pwd)/winlibs/${HOST}/" CPPFLAGS="-I$(pwd)/winlibs/${HOST}/" LD="${HOST}-ld" LDFLAGS="-static-libgcc -static-libstdc++ -L$(pwd)/winlibs/${HOST}/" ./configure --host="$HOST"; fi
+  - if [ ! -z "$HOST" ]; then CC="${HOST}-gcc" CFLAGS="-I$(pwd)/winlibs/${HOST}/" CPPFLAGS="-I$(pwd)/winlibs/${HOST}/" LD="${HOST}-ld" LDFLAGS="-static-libgcc -static-libstdc++ -no-undefined" ./configure --host="$HOST"; fi
   - if [ -z "$HOST" ]; then ./configure; fi
 
 script:
