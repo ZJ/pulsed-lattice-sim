@@ -13,6 +13,7 @@ AC_CONFIG_HEADERS([config.h])
 AC_PROG_CC
 AM_PROG_AR
 AS_CASE(AS_ESCAPE(["$HOST"],[""]),[*mingw32*],AS_ECHO(["AS_ESCAPE(["$HOST"],[""])"]),AS_ECHO(["No $HOST"]))
+AM_CONDITIONAL([MINGWHOST], [[[ $HOST == *mingw* ]]])
 LT_INIT([win32-dll])
 
 # Check fo Check for Unit Testing
