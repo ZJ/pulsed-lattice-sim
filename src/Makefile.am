@@ -9,3 +9,5 @@ liblens_setup_la_LDFLAGS = $(MINGWLDFLAGS)
 
 bin_PROGRAMS = simpleTest
 simpleTest_SOURCES = main.c
+simpleTest_LDFLAGS = $(MINGWLDFLAGS)
+simpleTest_LDADD = $(top_srcdir)/winlibs/$(host)/libfftw3-3.dll 

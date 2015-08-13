@@ -13,7 +13,8 @@ AC_CONFIG_HEADERS([config.h])
 AC_PROG_CC
 AM_PROG_AR
 AS_CASE(AS_ESCAPE(["$HOST"],[""]),[*mingw32*],AS_ECHO(["AS_ESCAPE(["$HOST"],[""])"]),AS_ECHO(["No $HOST"]))
-AM_CONDITIONAL([MINGWHOST], [test host-$HOST = host-i686-w64-mingw32 -o host-$HOST = host-x86_64-w64-mingw32])
+AC_MSG_NOTICE(["HOST is $HOST host is $host"])
+AM_CONDITIONAL([MINGWHOST], [test host-$host = host-i686-w64-mingw32 -o host-$host = host-x86_64-w64-mingw32])
 LT_INIT([win32-dll])
 
 # Check fo Check for Unit Testing
