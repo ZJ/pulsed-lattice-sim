@@ -1,11 +1,17 @@
 language: c
 compiler: gcc
+env:
+  - HOST=
+  - HOST=i686-w64-mingw32 LDFLAGS='-static-libgcc -static-libstdc++'
+  - HOST=x86_64-w64-mingw32 LDFLAGS='-static-libgcc -static-libstdc++'
 sudo: false
 addons:
   apt:
     packages:
     - libfftw3-dev
     - check
+    - mingw-w64-i686
+    - mingw-w64
 
 branches:
   only:
@@ -13,15 +19,16 @@ branches:
 
 before_script:
   - autoreconf --install
-  - ./configure
+  - if [ ! -z "$HOST" ] ./configure --host="$HOST"; fi
+  - if [ -z "$HOST" ] ./configure; fi
 
 script:
   - make && make check
 
 after_success:
-  - skip_cleanup: true
-  - echo -e "\e[32m( \u00b4 \u25bd \` )b\e[0m"
-  - ls -AR .
-#
-#after_failure:
-#  - echo -e "\e[31m(╯°□°)╯︵ ┻━┻\e[0m"
+  - echo -e "\e[32m( \u00b4 \u25bd \` )b  $HOST\e[0m"
+#  - ls -AR .
+
+after_failure:
+  - echo -e "\e[31m(╯°□°)╯︵ ┻━┻  $HOST\e[0m"
+#  - ls -AR .
