@@ -19,7 +19,7 @@ branches:
 
 before_script:
   - autoreconf --install
-  - if [ ! -z "$HOST" ]; then ./configure --host="$HOST"; fi
+  - if [ ! -z "$HOST" ]; then CC="${HOST}-gcc" LD="${HOST}-ld" ./configure --host="$HOST"; fi
   - if [ -z "$HOST" ]; then ./configure; fi
 
 script:
