@@ -12,7 +12,8 @@ AC_CONFIG_HEADERS([config.h])
 # Checks for programs.
 AC_PROG_CC
 AM_PROG_AR
-AC_PROG_LIBTOOL
+AS_CASE(AS_ESCAPE(["$HOST"],[""]),[*mingw32*],AS_ECHO(["AS_ESCAPE(["$HOST"],[""])"]),AS_ECHO(["No $HOST"]))
+LT_INIT([win32-dll])
 
 # Check fo Check for Unit Testing
 PKG_CHECK_MODULES([CHECK], [check >= 0.9.0],[have_check="yes"],
