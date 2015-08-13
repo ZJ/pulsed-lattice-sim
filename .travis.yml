@@ -19,8 +19,8 @@ branches:
 
 before_script:
   - autoreconf --install
-  - if [ ! -z "$HOST" ]; ./configure --host="$HOST"; fi
-  - if [ -z "$HOST" ]; ./configure; fi
+  - if [ ! -z "$HOST" ]; then ./configure --host="$HOST"; fi
+  - if [ -z "$HOST" ]; then ./configure; fi
 
 script:
   - make && make check
