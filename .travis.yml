@@ -16,10 +16,11 @@ addons:
 branches:
   only:
     - master
+    - SetupCrossCompile
 
 before_script:
   - autoreconf --install
-  - if [ ! -z "$HOST" ]; then CC="${HOST}-gcc" CFLAGS="-I$(pwd)/winlibs/${HOST}/" LD="${HOST}-ld" ./configure --host="$HOST"; fi
+  - if [ ! -z "$HOST" ]; then CC="${HOST}-gcc" CFLAGS="-I$(pwd)/winlibs/${HOST}/" CPPFLAGS="-I$(pwd)/winlibs/${HOST}/" LD="${HOST}-ld" ./configure --host="$HOST"; fi
   - if [ -z "$HOST" ]; then ./configure; fi
 
 script:
